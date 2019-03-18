@@ -22,6 +22,9 @@ import collectd
 import os
 import time
 
+METRIC_META_KEY = "stackdriver_metric_type"
+METRIC_BASE = "custom.googleapis.com/rabbitmq_monitoring"
+
 
 def configure(configobj):
     global INTERVAL
@@ -58,11 +61,7 @@ def read(data=None):
     for m_instance in ["channels", "connections", "consumers", "exchanges", "queues"]:
         if m_instance in overview[type_]:
             metric = collectd.Values()
-            metric.meta = {
-                "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}".format(
-                    m_instance, type_
-                )
-            }
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}".format(METRIC_BASE, m_instance, type_)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
@@ -76,9 +75,7 @@ def read(data=None):
         if m_instance in overview[type_]:
             metric = collectd.Values()
             metric.meta = {
-                "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}-{}".format(
-                    m_instance, type_, "count"
-                )
+                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, m_instance, type_)
             }
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
@@ -88,11 +85,7 @@ def read(data=None):
             metric.dispatch()
 
             metric = collectd.Values()
-            metric.meta = {
-                "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}-{}".format(
-                    m_instance, type_, "rate"
-                )
-            }
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, m_instance, type_)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
@@ -119,9 +112,7 @@ def read(data=None):
         if m_instance in overview[type_]:
             metric = collectd.Values()
             metric.meta = {
-                "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}-{}".format(
-                    m_instance, type_, "count"
-                )
+                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, m_instance, type_)
             }
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
@@ -131,11 +122,7 @@ def read(data=None):
             metric.dispatch()
 
             metric = collectd.Values()
-            metric.meta = {
-                "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}-{}".format(
-                    m_instance, type_, "rate"
-                )
-            }
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, m_instance, type_)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
@@ -155,11 +142,7 @@ def read(data=None):
         else:
             count = messages_detail[0]["message_count"]
         metric = collectd.Values()
-        metric.meta = {
-            "stackdriver_metric_type": "custom.googleapis.com/rabbitmq_monitoring/{}/{}".format(
-                "msg_count", queue_name
-            )
-        }
+        metric.meta = {METRIC_META_KEY: "{}/{}/{}".format(METRIC_BASE, "msg_count", queue_name)}
         metric.plugin = "rabbitmq_monitoring"
         metric.interval = INTERVAL
         metric.type = "gauge"
