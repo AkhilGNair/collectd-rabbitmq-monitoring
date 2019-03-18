@@ -61,7 +61,7 @@ def read(data=None):
     for m_instance in ["channels", "connections", "consumers", "exchanges", "queues"]:
         if m_instance in overview[type_]:
             metric = collectd.Values()
-            metric.meta = {METRIC_META_KEY: "{}/{}/{}".format(METRIC_BASE, m_instance, type_)}
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}".format(METRIC_BASE, type_, m_instance)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
@@ -75,7 +75,7 @@ def read(data=None):
         if m_instance in overview[type_]:
             metric = collectd.Values()
             metric.meta = {
-                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, m_instance, type_)
+                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, type_, m_instance)
             }
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
@@ -85,7 +85,7 @@ def read(data=None):
             metric.dispatch()
 
             metric = collectd.Values()
-            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, m_instance, type_)}
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, type_, m_instance)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
@@ -112,7 +112,7 @@ def read(data=None):
         if m_instance in overview[type_]:
             metric = collectd.Values()
             metric.meta = {
-                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, m_instance, type_)
+                METRIC_META_KEY: "{}/{}/{}-count".format(METRIC_BASE, type_, m_instance)
             }
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
@@ -122,7 +122,7 @@ def read(data=None):
             metric.dispatch()
 
             metric = collectd.Values()
-            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, m_instance, type_)}
+            metric.meta = {METRIC_META_KEY: "{}/{}/{}-rate".format(METRIC_BASE, type_, m_instance)}
             metric.plugin = "rabbitmq_monitoring"
             metric.interval = INTERVAL
             metric.type = "gauge"
